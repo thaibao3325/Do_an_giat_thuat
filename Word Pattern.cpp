@@ -2,27 +2,36 @@ class Solution {
 public:
     bool wordPattern(string pattern, string s) {
         vector<string> words;
-        stringstream ss(s);
         string word;
+        stringstream ss(s);
 
+        // Tách chuỗi s thành các từ
         while (ss >> word) {
             words.push_back(word);
         }
 
+        // Nếu độ dài khác nhau → false luôn
         if (pattern.size() != words.size()) return false;
 
-        unordered_map<char, string> p2w;
-        unordered_map<string, char> w2p;
+        unordered_map<char, string> mp1;
+        unordered_map<string, char> mp2;
 
         for (int i = 0; i < pattern.size(); i++) {
             char c = pattern[i];
             string w = words[i];
 
-            if (p2w.count(c) && p2w[c] != w) return false;
-            if (w2p.count(w) && w2p[w] != c) return false;
+            // Nếu đã tồn tại mapping
+            if (mp1.count(c)) {
+                if (mp1[c] != w) return false;
+            } else {
+                mp1[c] = w;
+            }
 
-            p2w[c] = w;
-            w2p[w] = c;
+            if (mp2.count(w)) {
+                if (mp2[w] != c) return false;
+            } else {
+                mp2[w] = c;
+            }
         }
 
         return true;

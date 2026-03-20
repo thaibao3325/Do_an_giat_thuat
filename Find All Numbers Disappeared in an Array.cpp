@@ -1,17 +1,19 @@
 class Solution {
 public:
     vector<int> findDisappearedNumbers(vector<int>& nums) {
-        // Step 1: Mark appeared numbers
-        for (int i = 0; i < nums.size(); i++) {
-            int idx = abs(nums[i]) - 1;
-            if (nums[idx] > 0) {
-                nums[idx] = -nums[idx];
+        int n = nums.size();
+
+        // Đánh dấu
+        for (int i = 0; i < n; i++) {
+            int x = abs(nums[i]);
+            if (nums[x - 1] > 0) {
+                nums[x - 1] = -nums[x - 1];
             }
         }
 
-        // Step 2: Collect missing numbers
+        // Tìm số bị thiếu
         vector<int> result;
-        for (int i = 0; i < nums.size(); i++) {
+        for (int i = 0; i < n; i++) {
             if (nums[i] > 0) {
                 result.push_back(i + 1);
             }
